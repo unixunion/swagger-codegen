@@ -14,7 +14,7 @@ pub struct {{classname}} {
   {{#description}}
   /// {{{description}}}
   {{/description}}
-  #[serde(rename = "{{baseName}}")]
+  #[serde(rename = "{{baseName}}", skip_serializing_if="Option::is_none")]
   {{name}}: {{^required}}Option<{{/required}}{{{datatype}}}{{^required}}>{{/required}}{{#hasMore}},{{/hasMore}}
 {{/vars}}
 }
