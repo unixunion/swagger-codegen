@@ -8,13 +8,18 @@
 #[allow(unused_imports)]
 use serde_json::Value;
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct {{classname}} {
 {{#vars}}
   {{#description}}
   /// {{{description}}}
   {{/description}}
-  #[serde(rename = "{{baseName}}", skip_serializing_if="Option::is_none")]
+  {{#required}}
+      #[serde(rename = "{{baseName}}")]
+  {{/required}}
+  {{^required}}
+      #[serde(rename = "{{baseName}}", skip_serializing_if="{{^required}}Option{{/required}}{{^required}}{{/required}}::is_none")]
+  {{/required}}
   {{name}}: {{^required}}Option<{{/required}}{{{datatype}}}{{^required}}>{{/required}}{{#hasMore}},{{/hasMore}}
 {{/vars}}
 }
