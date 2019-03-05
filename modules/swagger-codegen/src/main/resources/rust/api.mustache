@@ -94,7 +94,7 @@ impl<C: hyper::client::Connect>{{classname}} for {{classname}}Client<C> {
                 query.append_pair("{{baseName}}", &{{paramName}}{{#isListContainer}}.join(","){{/isListContainer}}.to_string());
             {{/required}}
             {{^requires}}
-                if String::from(format!("{:?}", &{{paramName}})) != "\"\"" {
+                if format!("{:?}", &{{paramName}}) != "\"\"" {
                     println!("{{paramName}} is: {}", format!("{:?}", &{{paramName}}));
                     query.append_pair("{{baseName}}", &{{paramName}}{{#isListContainer}}.join(","){{/isListContainer}}.to_string());
                 }
