@@ -91,14 +91,13 @@ impl<C: hyper::client::Connect>{{classname}} for {{classname}}Client<C> {
 {{#queryParams}}
 
             {{#required}}
-                query.append_pair1("{{baseName}}", &{{paramName}}{{#isListContainer}}.join(","){{/isListContainer}}.to_string());
+                query.append_pair("{{baseName}}", &{{paramName}}{{#isListContainer}}.join(","){{/isListContainer}}.to_string());
             {{/required}}
             {{^requires}}
-                let (k,v) = match {{paramName}} {
-                    ref x => ("{{baseName}}", {{paramName}}{{#isListContainer}}.join(","){{/isListContainer}}),
-                    _ => unimplemented!(),
-                };
-                query.append_pair(k, &format!("{}", v.to_string()));
+                if String::from(format!("{:?}", &{{paramName}})) != "\"\"" {
+                    println!("{{paramName}} is: {}", format!("{:?}", &{{paramName}}));
+                    query.append_pair("{{baseName}}", &{{paramName}}{{#isListContainer}}.join(","){{/isListContainer}}.to_string());
+                }
             {{/requires}}
 
 {{/queryParams}}
